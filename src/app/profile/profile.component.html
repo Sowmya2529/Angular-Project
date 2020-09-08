@@ -1,0 +1,212 @@
+<!-- <div class="profile">
+  <app-navbar [metaData]="metaData"></app-navbar>
+
+  <div class="main-content">
+    <br />
+  
+    <div id="profilecontainer" class="profile_upload_section">
+      <ngx-avatar
+        src="{{ profileImage }}"
+        fgColor="black"
+        name="{{ companyname }}"
+        bgColor="antiquewhite"
+        [round]="true"
+        alt="Winery Image"
+        [size]="50"
+        class="propic"
+      ></ngx-avatar>
+      <div class="profile_options">
+        <span (click)="setProfileEdit(editProfile ? false : true)">
+          {{ editProfile ? "Save" : "Edit" }}
+        </span>
+        <label for="profile_upload" *ngIf="editProfile"> Upload </label>
+        <input
+          type="file"
+          id="profile_upload"
+          name="profile_upload"
+          [multiple]="false"
+          accept="image/*"
+          (change)="getFormData($event.target.files)"
+        />
+      </div>
+    </div>
+
+    <br />
+    <form>
+      <div class="contentcontainer">
+        <label>First Name</label>
+
+        <input
+          [disabled]="!editProfile"
+          value="{{ profile.firstName }}"
+          matInput
+          style="height: 2.5em"
+          type="text"
+          required
+        />
+      </div>
+      <br />
+      <div class="contentcontainer">
+        <label>Last Name</label>
+        <input
+          [disabled]="!editProfile"
+          value="{{ profile.lastName }}"
+          matInput
+          style="height: 2.5em"
+          required
+        />
+      </div>
+      <br />
+      <div class="contentcontainer">
+        <label>Work Email ID</label>
+
+        <input
+          [disabled]="!editProfile"
+          value="{{ profile.email }}"
+          matInput
+          style="height: 2.5em"
+          required
+        />
+      </div>
+      <br />
+      <div class="contentcontainer">
+        <label>Position</label>
+
+        <input
+          [disabled]="!editProfile"
+          value="{{ profile.position }}"
+          matInput
+          style="height: 2.5em"
+          required
+        />
+      </div>
+      <br />
+      <div class="contentcontainer">
+        <label>Reporting Manager</label>
+
+        <input
+          [disabled]="!editProfile"
+          value="{{ profile.reporting }}"
+          matInput
+          style="height: 2.5em"
+          required
+        />
+      </div>
+      <br />
+      <br />
+      <div class="buttons">
+        <button
+          mat-button
+          style="
+            background-color: white;
+            border-radius: 0px;
+            border: 1px solid #133e62 !important;
+            box-shadow: 0px 1px 6px #00000029;
+          "
+        >
+          <a
+            style="text-decoration: none; color: #133e62"
+            [routerLink]="['user']"
+            routerLinkActive="active"
+          >
+            Cancel</a
+          >
+        </button>
+        <button
+          mat-button
+          class="btntwo"
+          style="
+            background: #133e62 0% 0% no-repeat padding-box;
+
+            color: white;
+            border-radius: 0px;
+            border: 1px solid white !important;
+            box-shadow: 0px 1px 6px white;
+          "
+        >
+          <a
+            style="text-decoration: none; color: white"
+            [routerLink]="['success']"
+            routerLinkActive="active"
+          >
+            Save Changes</a
+          >
+        </button>
+      </div>
+      <br />
+      <br />
+    </form>
+  </div>
+</div> -->
+
+<div>
+  <app-navbar [metaData]="metaData" [ProfileImage] = "ProfileImage"></app-navbar>
+
+ 
+
+  <div align = "center" >
+    <div id="profilecontainer" class="profile_upload_section">
+      <!-- <div >
+        <span (click)="setProfileEdit(editProfile ? false : true)">
+        
+          <span *ngIf = "!editProfile"><mat-icon style="padding-left: 100px;">add</mat-icon></span>
+        </span>
+        <label  *ngIf="editProfile"> Upload </label>
+        <input
+          type="file"
+          id="profile_upload"
+          name="profile_upload"
+          [multiple]="false"
+          accept="image/*"
+          (change)="getFormData($event)"
+        />
+      </div> -->
+
+      <!-- <div > -->
+        <div class="image-upload">
+          <label style = "margin-bottom: 0 !important;display: contents" for = "profile_upload">
+            <mat-icon  style="padding-left: 100px;color: black;width: 240px;">add</mat-icon>
+            <!-- <i class="fa fa-plus" aria-hidden="true"  style="padding-left: 100px;"></i> -->
+          </label>
+          <input type="file" id="profile_upload" name="profile_upload" [multiple]="false"  accept="image/*" (change)="getFormData($event.target.files)"/>
+      </div>
+   
+      <ngx-avatar
+          src="{{ ProfileImage }}"
+          name="{{firstNameInitial}} {{lastNameInitial}}"
+          [round]="true"
+          alt="Winery Image"
+          [size]="120"
+          class="propic"
+    >
+  </ngx-avatar>
+
+   
+
+    </div>
+
+  </div>
+  
+<div style="height: 0.5em;"></div>
+  <div align = "center">
+
+    <div class = "contentcontainer ">
+      <div >
+        <span style="color:black;font-size:30px">{{firstName}} {{lastName}}</span>
+        <div style="height: 0.5em;"></div>
+        <span style = "color: #133E62;font-size:15px">{{email}}</span>
+       <div style="height: 1em;"></div>
+       <span style = "color: #133E62;font-size:15px" *ngIf = "phone">{{phone}}</span>
+       <div style="height: 1em;"></div>
+       <span style = "color: #133E62;font-size:13px" *ngIf = "phone == null"></span>
+       <div style="height: 1.5em;"></div>
+
+        <span class = "companyName">{{companyname | titlecase}}</span>
+      </div>
+     
+     
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,122 @@
+<div class="createpass">
+  <div
+    class="topnav"
+    style="background-color: #4f5e76; height: 60px; width: 100%"
+  ></div>
+  <br />
+  <div
+    class="logocontainer"
+    style="align-items: center; justify-content: center; text-align: center"
+  >
+    <div class="logo" style="align-items: center; justify-content: center">
+      <img
+        src="assets/logo_white_bg/Orange_Flower__1_-removebg-preview-3.png"
+      />
+      <!--style="padding-top: 170px; padding-left: 100px;"-->
+      <br />
+      <h5
+        class="title"
+        style="color: #ff674d; text-align: center; font-size: 20px"
+      >
+        Kriya
+      </h5>
+    </div>
+  </div>
+  <br />
+  <form [formGroup]="loginForm">
+    <div class="formscenter" style="align-items: center">
+      <div class="forms">
+        <div class="createpassword">
+          <label>E-mail <span style="color: red">*</span></label>
+          <br />
+          <input
+            class="inputTextBox"
+            style="height: 40px"
+            type="text"
+            formControlName="email"
+          />
+          <div
+            *ngIf="f.email.touched && loginForm.controls['email'].errors"
+            class="error-msg"
+          >
+            <div [hidden]="!loginForm.controls['email'].errors.required">
+              * Email is required
+            </div>
+            <div
+              [hidden]="
+                !loginForm.controls['email'].errors.email &&
+                !loginForm.controls['email'].errors.pattern
+              "
+            >
+              * Please enter a valid email address
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <div class="confirmpassword">
+          <label>Password <span style="color: red">*</span></label>
+          <br />
+          <input
+            class="inputTextBox"
+            style="height: 40px"
+            type="password"
+            formControlName="password"
+          />
+          <div
+            *ngIf="
+              loginForm.controls['password'].errors &&
+              loginForm.controls['password'].touched
+            "
+            class="error-msg"
+          >
+            <div [hidden]="!loginForm.controls['password'].errors.required">
+              * Password is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <button
+      class="startedbtn"
+      mat-button
+      style="
+        color: #ffffff;
+        background: linear-gradient(
+          to right top,
+          #3c6a93,
+          #356490,
+          #2d5e8d,
+          #255989,
+          #1d5386,
+          #195082,
+          #154c7e,
+          #10497a,
+          #104674,
+          #11446e,
+          #124168,
+          #133e62
+        );
+        font-family: 'Montserrat';
+        font-weight: 900;
+        font-size: 12pt;
+        text-align: center;
+      "
+      (click)="success()"
+      [disabled]="loginForm.invalid"
+    >
+      Login
+    </button>
+    <br />
+    <br />
+    <!--<div *ngIf="emptyinp" class="error-msg invalid-credentials">
+      <div class="invalidmsg" style="text-align: center;">
+        Please fill the fields
+      </div>
+    </div>-->
+    <div *ngIf="invalid" class="error-msg invalid-credentials">
+      <div class="invalidmsg">Invalid Credentials! Please try again</div>
+    </div>
+  </form>
+</div>

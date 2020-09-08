@@ -1,0 +1,19 @@
+@media (max-width: 500px) {
+  .logo {
+    margin-top: 45%;
+  }
+  .logo img {
+    width: "50%";
+    height: "50%";
+  }
+}
+
+@media (min-width: 1000px) {
+  .logo {
+    margin-top: 100px;
+  }
+  .logo img {
+    width: "10%";
+    height: "50%";
+  }
+}

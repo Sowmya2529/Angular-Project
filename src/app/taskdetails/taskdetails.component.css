@@ -1,0 +1,360 @@
+@media (min-width: 900px) {
+  .main-content {
+    /* margin-top: 30px; */
+    margin-left: 250px;
+    padding: 20px;
+  }
+  .notes_textarea{
+    width: 100%;
+    height: 15vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    color: white;
+    font-size:15px;
+    resize: none;
+  }
+  
+  textarea::placeholder {
+    color:#CCCCCC;
+    /* font-weight: bold; */
+    font-size: medium;  
+  }
+  .completed {
+    text-decoration: line-through;
+    color: #767678;
+  }
+  
+  .mat-card {
+    border-radius: 0px !important;
+  } 
+  
+  .hide-calender-input::ng-deep .ui-inputtext {
+    display: none;
+  }
+  
+  ::ng-deep body .ui-button { 
+   color:#133E62;
+   border: 0 !important;
+   background-color: transparent;
+   font-size: medium;
+   font-family:Roboto;
+ 
+}
+  ::ng-deep body .ui-button:enabled:hover {   
+    color: #133E62;
+    background-color: transparent;
+  }
+
+  .material-icons {
+    color: white;
+    
+  }
+ .desktop_options
+ {
+ 
+  padding-top:5px;
+  padding-left:38px;
+ }
+ .desktop_options_font
+ {
+  font-size:small;
+  color:#133E62;
+  padding-left:5px;
+  font-family:Roboto;
+ }
+  .edit_project{
+    height: 3vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    font-size: 20px;
+    color: white;
+  }
+  /* #footer{
+    bottom:5px;
+    display: block;
+    width: 100%;
+   
+} */
+
+
+.incompletedScroll{
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+.disp-n
+{
+  display: none;
+}
+.incompletedScroll1
+{
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+.completedScroll1
+{
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+.completedScroll{
+  width: 100%;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+.completedScroll2{
+  width: 100%;
+  height: 130px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+  
+}
+.imgicon
+{
+  width:15pt;
+  padding-left:5px;
+}
+.card{
+  height:40px;
+  width:160px;
+  
+}
+
+.desktop_status{
+  visibility: hidden;
+  display: none;
+}
+
+
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .main-content {
+    /* margin-top: 30px; */
+    padding: 20px;
+  }
+  /* .modal-dialog{
+    position:fixed;
+    bottom: 0;
+  } */
+ .mobile_font
+ {
+  font-size:small;
+  color:#133E62;
+ padding-top:4px;
+  font-family:Roboto;
+ }
+  .mobfont
+  {
+    font-size:10pt;
+  }
+  .completed {
+    text-decoration: line-through;
+    color: #767678;
+  }
+  .imgicon
+{
+  width:10pt;
+/*  padding-left:5px;*/
+
+}
+.card
+{
+  width:95px;
+  height:30px;
+  
+}
+  .incompletedScroll{
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  .disp-n
+  {
+    display: none;
+  }
+  .incompletedScroll1
+  {
+    width: 100%;
+    height: 290px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  .completedScroll1
+  {
+    width: 100%;
+    height: 290px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  .completedScroll{
+    width: 100%;
+    height: 90px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  
+  .notes_textarea{
+    width: 100%;
+    height: 15vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    color: white;
+    resize: none;
+  }
+ 
+  /* #footer{
+    position: absolute;
+    bottom:6%;width: 92%;
+  } */
+  .modal-dialog {
+    position: absolute;
+    top: 55%;
+    right: 0px;
+    bottom: 0px;
+    left: 0;
+    z-index: 10040;
+    overflow: auto;
+    overflow-y: auto;
+   
+  }
+  .mat-card {
+    border-radius: 0px !important;
+  }
+  textarea::placeholder {
+    color:#CCCCCC;
+    font-weight: bold;  
+  }
+  
+  .hide-calender-input::ng-deep .ui-inputtext {
+    display: none;
+  }
+  
+  ::ng-deep body .ui-button { 
+    color:#133E62;
+    border: 0 !important;
+    background-color: transparent;
+    font-size: medium;
+    font-family:Roboto;
+  
+ }
+   ::ng-deep body .ui-button:enabled:hover {   
+     color: #133E62;
+     background-color: transparent;
+   }
+  .material-icons {
+    color: white;
+  }
+  .edit_project{
+    height: 3vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    font-size: 1em;
+    color: white;
+  }
+ 
+  .notCompletedScroll{
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+
+  .completedScroll{
+    width: 100%;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  .mobile_status{
+    visibility: hidden;
+    display: none;
+  }
+
+}
+@media only screen and (min-device-width : 494px) and (max-device-width : 890px) {
+  .main-content {
+    margin-top: 30px;
+    padding: 20px;
+  }
+  .notes_textarea{
+    width: 100%;
+    height: 15vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    color: white;
+    resize: none;
+  }
+  .mobfont
+  {
+    font-size:10pt;
+  }
+  .imgicon
+
+    textarea::placeholder {
+    color:#CCCCCC;
+    font-weight: bold;
+    font-size: medium;  
+  }
+  .completed {
+    text-decoration: line-through;
+    color: #767678;
+  }
+  
+  .mat-card {
+    border-radius: 0px !important;
+  } 
+  
+  .hide-calender-input::ng-deep .ui-inputtext {
+    display: none;
+  }
+  
+  ::ng-deep body .ui-button { 
+    color:#133E62;
+    border: 0 !important;
+    background-color: transparent;
+    font-size: medium;
+    font-family:Roboto;
+  
+ }
+   ::ng-deep body .ui-button:enabled:hover {   
+     color: #133E62;
+     background-color: transparent;
+   }
+  .material-icons {
+    color: white;
+  }
+  .edit_project{
+    height: 3vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    font-size: 1em;
+    color: white;
+  }
+  .imgicon
+  {
+    width:12pt;
+  /*  padding-left:5px;*/
+  }
+ 
+}
+.mat-icon{
+color:#133E62;
+}
+
+.mat-card
+{
+  border-radius: 5px !important;
+}

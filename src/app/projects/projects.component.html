@@ -1,0 +1,64 @@
+<div>
+  <app-navbar [metaData]="metaData"></app-navbar>
+
+  <div class="main-content">
+    <!-- Heading of project -->
+    
+    <div *ngIf="!isLoaded" style="text-align: center;">
+      <div class="spinner-border text-white"></div>
+    </div>
+
+    <!-- Card description -->
+    <div *ngIf="isLoaded">
+      <div id="ProjectsScroll">
+        <div *ngFor="let prop of getALLProjects; let i = index">
+          <mat-card style="cursor: pointer;" (click)="gotoProjectDetails(i)">
+            <div class="row">
+              <div class="col-md-7">
+                <mat-card-title class="card_heading mt-1">{{
+                prop.name
+              }}</mat-card-title>
+                <mat-card-subtitle class="card_sub_heading m-b-4">{{prop.tasksLen === 0 ? 'No Tasks' : (prop.tasksLen > 1 ? prop.tasksLen + ' Tasks' : prop.tasksLen + ' Task')}}</mat-card-subtitle>
+              </div>
+              <div class="col-md-5">
+                <div class="m-t-5 pt-15">
+                  <span class="heading_status" *ngIf="prop.status === 'active'">In progress</span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+          <div style="height: 1em;"></div>
+        </div>
+      </div>
+      <div *ngIf="length == 0">
+        <div class="main_heading">No Projects created</div>
+      </div>
+    </div>
+  </div>
+  <div style="height:6em"></div>
+
+  <!-- button Add project  -->
+  <div class="main-content fixed-bottom">
+
+    <div id="footer">
+      <div *ngIf="errMsg"> 
+        <div class="main_heading" style="color: rgb(245, 1, 1);">
+          Please enter the project name
+        </div>
+      </div>
+      <div class="row" *ngIf="clicked">
+        <div class="col-md-12 col-lg-12 col-12">
+          <input type="text" #myinput class="text-height form-control" [(ngModel)]="projectName"
+            placeholder="Enter the project name here... " (keyup)="AddProject($event)">{{myinput.focus()}}
+        </div>
+      </div>
+     
+
+      <button mat-button class="add_button" (click)="clicked = true">
+        <mat-icon class="float-left mt-1">add</mat-icon>&nbsp;
+        <span style="float: left;"> Add Project</span>
+      </button>
+    </div>
+  </div>
+
+</div>

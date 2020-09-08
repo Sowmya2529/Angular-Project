@@ -1,0 +1,744 @@
+<div>
+  <app-navbar [metaData]="metaData"></app-navbar>
+  
+  <!-- heading content -->
+  <div class="heading-content">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-6">
+        <input
+          class="edit_project"
+          type="text"
+          [(ngModel)]="projectName"
+          (keyup)="EditProject($event)"
+        />
+      </div>
+      <div class="col-lg-6 col-md-6 col-6">
+        <span class="heading_status">In progress</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 col-lg-10 col-10">
+        <textarea *ngIf="isEditDesc" class="notes_textarea" placeholder="Type here to add a description/notes" [(ngModel)]="projectDesc" (keyup)="addProjectDesc($event)"></textarea>
+        <label *ngIf="!isEditDesc" class="notes_textarea" style="font-size:16px;color:#B8B8B8;font-family:Roboto">{{projectDesc ? projectDesc : "Type here to add a description/notes"}}</label>
+      </div>
+      <div class="col-md-2 col-lg-2 col-2">
+        <span class="pointer" *ngIf="!isEditDesc">
+          <mat-icon (click)="isEditDesc = true" style="color: #ffffff;padding-right:20px">edit</mat-icon>
+        </span>
+        <span class="pointer" *ngIf="isEditDesc">
+          <mat-icon (click)="cancelDesc()" style="color: #ffffff;">cancel</mat-icon>
+        </span>
+      </div>
+    </div>
+    <div class = "mt-0"></div>
+
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col-12">
+        <span style="color: #ffffff; font-size: 1em"
+          ><u>{{ createdName }}</u>
+          <span style="color: #cccccc"> created this project on </span
+          >{{ createdOn | date: "d MMMM y" }}
+        </span>
+      </div>
+    </div>
+
+    <div class="mt-2"></div>
+
+    <div class="row ml-0">
+      <div class="column" *ngFor="let prop of Userarray">
+        <!-- <img
+          title="{{ prop.firstName }} {{ prop.lastName }}"
+          src="{{ !prop.imageUrl ? './assets/user-4.svg' : prop.imageUrl }}"
+          style="width: 2em; border-radius: 4px"
+        />&nbsp;&nbsp; -->
+        <div title="{{ prop.firstName }} {{ prop.lastName }}">
+        <ngx-avatar
+          src="{{ prop.imageUrl }}"
+          fgColor="black"
+          name="{{ prop.firstName }} {{ prop.lastName }}"
+          bgColor="antiquewhite"
+          [round]="true"
+          alt="Winery Image"
+          [size]="30"
+          class="propic"
+        
+        >
+      </ngx-avatar>
+    </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- card status content  -->
+  <div style="text-align: center;" class="main-content card-cont" *ngIf="lengthCompletedTasks > 0 || lengthIncompletedTasks > 0">
+    <div class="row">
+      <div class="col-md-2 col-3" style="cursor: pointer;" (click)="clickedcomp='overdue'" [ngStyle]="clickedcomp=='overdue'?{'background-color':''}:{'background-color':''}">
+        <div class="card">
+          <div class="col mt-1">
+            <span
+              class="card_status_color"
+              style="background-color: #E3170A; margin-left: 90%"
+            ></span>
+            <div class="card_status_number">{{ lengthofoverdue }}</div>
+            <div class="card_status desktop_status">Overdue</div>
+          </div>
+        </div>
+        <div align="center" class="card_mobile_status mobile_status">Overdue</div>
+      </div>
+      <div class="col-md-2 col-3" style="cursor: pointer;" (click)="clickedcomp='all'">
+        <div class="card">
+          <div class="col mt-1">
+            <span
+              class="card_status_color"
+              style="background-color: #e5e51f; margin-left: 90%"
+            ></span>
+            <div class="card_status_number">{{ lengthOfTotalTasks }}</div>
+            <div class="card_status desktop_status">All</div>
+          </div>
+        </div>
+        <div align="center" class="card_mobile_status mobile_status">All</div>
+      </div>
+      <div class="col-md-2 col-3">
+        <div class="card">
+          <div class="col mt-1">
+            <span
+              class="card_status_color"
+              style="background-color: #ff7f00; margin-left: 90%"
+            ></span>
+            <div class="card_status_number" *ngIf="lengthIncompletedTasks >= 0">
+              {{ lengthIncompletedTasks }}
+            </div>
+            <div class="card_status desktop_status">Open</div>
+          </div>
+        </div>
+        <div align="center" class="card_mobile_status mobile_status">Open</div>
+      </div>
+      <div class="col-md-2 col-3">
+        <div class="card">
+          <div class="col mt-1">
+            <span
+              class="card_status_color"
+              style="background-color: #80d127; margin-left: 90%"
+            ></span>
+            <div class="card_status_number" *ngIf="lengthCompletedTasks >= 0">
+              {{ lengthCompletedTasks }}
+            </div>
+            <div class="card_status desktop_status">Completed</div>
+          </div>
+        </div>
+        <div align="center" class="card_mobile_status mobile_status">
+          Completed
+        </div>
+      </div>
+      <div style="height: 1em"></div>
+    </div>
+  </div>
+
+  <!--Incompleted Tasks-->
+  <div *ngIf="clickedcomp=='all'">
+    <!--<div id="completedandnotcompletedScroll">-->
+    <div class="card-content">
+      <div style="height: 1em"></div>
+
+      <div *ngIf="!isLoaded" style="text-align: center">
+        <div class="spinner-border text-white"></div>
+      </div>
+
+      <div *ngIf="isLoaded">
+        <div [ngClass]="">
+          <div *ngFor="let prop of incompletedTasks; let i = index">
+            <mat-card style="cursor: pointer">
+              <div class="row">
+                
+                <div class="col-md-10 col-lg-10 col-10">
+                  <div
+                    class="radiobtn float-left mt-1"
+                    (click)="MarkAsComplete(i)"
+                    (mouseenter)="mouseEnter(i)"
+                    (mouseleave)="mouseLeave(i)"
+                  >
+                    <mat-icon *ngIf="!iconvisiblearray[i]"
+                      >panorama_fish_eye</mat-icon
+                    >
+                    <mat-icon
+                      [hidden]="!iconvisiblearray[i]"
+                      title="Mark as complete"
+                      >check_circle_outline</mat-icon
+                    >
+                  </div>
+
+                  <div (click)="gotoTaskDetails(i)" style="margin-left: 2em">
+                    <span class="card_heading"> {{ prop.name }} 
+                   
+                      <div *ngIf="prop.priority=='now'" style="display:inline">
+                        
+                        <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/now.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                      </div>
+                      
+                   <!---   <div *ngIf="prop.priority=='later'" style="display:inline">
+                        
+                        <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/later.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                      </div>-->
+                      
+                      <div *ngIf="prop.importance=='high'" style="display:inline">
+                        
+                        <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/high.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                      </div>
+                    
+                     <!--- <div *ngIf="prop.importance=='low'" style="display:inline">
+                        
+                        <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/low.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                      </div>-->
+                      <div *ngIf="prop.importance=='normal'" style="display:inline">
+                        
+                        <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/normal.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                      </div>
+                    
+                    
+                    </span>
+                  
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length > 1"
+                    >
+                      {{ prop.subTasks.length }} Subtasks
+                      <span *ngIf="prop.dueDate">,
+                        {{getduedate(prop.dueDate)}}
+                       &nbsp; <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                      </span>
+                      
+                    </div>
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length == 1"
+                    >
+                    
+                      {{ prop.subTasks.length }} Subtask 
+                      <span *ngIf="prop.dueDate">,
+                        {{getduedate(prop.dueDate)}}
+                       &nbsp; <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                      </span>
+                    </div>
+                    
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length == 0"
+                    ></div>
+                   
+                   <div *ngIf="prop.dueDate && prop.subTasks.length == 0">
+                      {{getduedate(prop.dueDate)}}
+                      <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                
+                <div class="col-md-2 col-lg-2 col-2">
+                  <!-- <div class="float-right" style="border-left: 1px solid grey;height: 60px;"> -->
+                  <div
+                    style="padding-top: 6pt; float: right"
+                    *ngIf="!prop.assignedTo"
+                  >
+                    <img 
+                      (click)="goToTaskAssignModal(i)"
+                      src="/assets/humansample/person.svg"
+                      style="border-radius: 2px;cursor: pointer;"
+                    />
+                  </div>
+
+                  <div
+                    style="padding-top: 6pt; float: right"
+                    *ngIf="prop.assignedTo"
+                  >
+                    <div (click)="goToTaskAssignModal(i)">
+                      <div title="{{ prop.assigned_user.firstName }} {{
+                        prop.assigned_user.lastName
+                      }}">
+                      <ngx-avatar
+                        src="{{ prop.assigned_user.imageUrl }}"
+                        fgColor="black"
+                        name="{{ prop.assigned_user.firstName }} {{
+                          prop.assigned_user.lastName
+                        }}"
+                        bgColor="antiquewhite"
+                        [round]="true"
+                        alt="Winery Image"
+                        [size]="30"
+                        class="propic"
+                      ></ngx-avatar>
+                      </div>
+                    </div>
+                    <!-- <img
+                      (click)="goToTaskAssignModal(i)"
+                      title="{{ prop.assigned_user.firstName }} {{
+                        prop.assigned_user.lastName
+                      }}"
+                      src="assets/user-4.svg"
+                      style="border-radius: 2px"
+                      width="30px"
+                    /> -->
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </mat-card>
+
+            <div style="height: 1em"></div>
+            <!--</div>-->
+          </div>
+          
+        </div>
+        <div *ngIf="IncompletedTaskslength == 0">
+          <div class="main_heading">No Tasks Available</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="accordion" id="accordionExample">
+      <span style="color: white; cursor: pointer;" data-toggle="collapse" data-target="#collapseOne"
+        *ngIf="CompletedTaskslength > 0">Completed</span>
+    </div> -->
+
+    <!-- /* Completed Tasks */ -->
+    <div class="main-content" style="margin-top: 5px;">
+      <div class="accordion" id="accordionExample">
+        <span
+          style="color: white; cursor: pointer"
+          data-toggle="collapse"
+          data-target="#collapseOne"
+          *ngIf="CompletedTaskslength > 0"
+           (click)="clickcomp=true"
+          >
+          Completed</span>
+     </div>
+  <div style="height:1em"></div>
+      <div [ngClass]="">
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div *ngFor="let prop of completedTasks; let i = index">
+            <mat-card>
+              <div class="row">
+                <div class="col-md-10 col-10 col-lg-10">
+                  <div class="radiobtn float-left mt-1"(click)="MarkAsIncomplete(i)" style="cursor:pointer" title="Mark as incomplete">
+                    <mat-icon
+                      title="Mark as not complete"
+                      style="float: left; color: #133e62"
+                      >check_circle</mat-icon>
+                  </div>
+                   
+                  <div style="margin-left: 2em">
+                    <span class="card_heading">
+                      <s>{{ prop.name }}</s></span
+                    >
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length > 1"
+                    >
+                      {{ prop.subTasks.length }} Subtasks
+                    </div>
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length == 1"
+                    >
+                      {{ prop.subTasks.length }} Subtask
+                    </div>
+                    <div
+                      class="card_sub_heading"
+                      *ngIf="prop.subTasks.length == 0"
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-2">
+                  <!-- <div class="float-right" style="border-left: 1px solid grey;height: 60px;"> -->
+                  <div style="float: right; padding-top: 6pt">
+                    <!-- <img title="{{prop.assigned_user.firstName}} {{prop.assigned_user.lastName}}" src="/assets/user-4.svg" width="30px" /> -->
+                    <div title="{{ prop.assigned_user.firstName }} {{
+                      prop.assigned_user.lastName
+                    }}">
+                    <ngx-avatar
+                      src="{{  prop.assigned_user.imageUrl  }}"
+                      fgColor="black"
+                      name="{{ prop.assigned_user.firstName }} {{
+                        prop.assigned_user.lastName
+                      }}"
+                      
+                      bgColor="antiquewhite"
+                      [round]="true"
+                      alt="Winery Image"
+                      [size]="30"
+                      class="propic"
+                       
+                    >
+                  </ngx-avatar>
+                  </div>
+
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </mat-card>
+            <div style="height:1em"></div>
+          </div>
+        
+          <!-- <div *ngIf="CompletedTaskslength == 0">
+          <div align="center" class="main_heading">No Completed tasks</div>
+        </div> -->
+        </div>
+      </div>
+      <div style="height:4em"></div>
+      <!--- </div>-->
+    </div>
+  </div>
+<!--Overdue tasks-->
+<div *ngIf="clickedcomp=='overdue'">
+  <!--<div id="completedandnotcompletedScroll">-->
+  <div class="card-content">
+    <div style="height: 1em"></div>
+
+    <div *ngIf="!isLoaded" style="text-align: center">
+      <div class="spinner-border text-white"></div>
+    </div>
+
+    <div *ngIf="isLoaded">
+      <div [ngClass]="">
+        <div *ngFor="let prop of overdue; let i = index">
+          <div *ngIf="!prop.parentTaskId">
+          <mat-card style="cursor: pointer">
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-10">
+                <div
+                  class="radiobtn float-left mt-1"
+                  (click)="MarkAsComplete(i)"
+                  (mouseenter)="mouseEnter(i)"
+                  (mouseleave)="mouseLeave(i)"
+                >
+                  <mat-icon *ngIf="!iconvisiblearray[i]"
+                    >panorama_fish_eye</mat-icon
+                  >
+                  <mat-icon
+                    [hidden]="!iconvisiblearray[i]"
+                    title="Mark as complete"
+                    >check_circle_outline</mat-icon
+                  >
+                </div>
+
+                <div (click)="gotoTaskDetails(i)" style="margin-left: 2em">
+                  <span class="card_heading"> {{ prop.name }}</span>
+                  <div *ngIf="prop.priority=='now'" style="display:inline">
+                        
+                    <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/now.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                  </div>
+                  
+                 <!--- <div *ngIf="prop.priority=='later'" style="display:inline">
+                    
+                    <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/later.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                  </div>-->
+                  
+                  <div *ngIf="prop.importance=='high'" style="display:inline">
+                    
+                    <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/high.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                  </div>
+                
+                 <!--- <div *ngIf="prop.importance=='low'" style="display:inline">
+                    
+                    <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/low.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                  </div>-->
+                  <div *ngIf="prop.importance=='normal'" style="display:inline">
+                    
+                    <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/normal.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                  </div>
+                
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length > 1"
+                  >
+                    {{ prop.subTasks.length }} Subtasks
+                    <span *ngIf="prop.dueDate">,
+                      {{getduedate(prop.dueDate)}}
+                     &nbsp; <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                    </span>
+                    
+                  </div>
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length == 1"
+                  >
+                  
+                    {{ prop.subTasks.length }} Subtask 
+                    <span *ngIf="prop.dueDate">,
+                      {{getduedate(prop.dueDate)}}
+                     &nbsp; <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                    </span>
+                  </div>
+                  
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length == 0"
+                  ></div>
+                 
+                 <div *ngIf="prop.dueDate && prop.subTasks.length == 0">
+                    {{getduedate(prop.dueDate)}}
+                    <img style="padding-bottom:6px;" width="18pt" src="/assets/Mask Group 60.svg"><span style="color:black;font-family:Roboto;font-size:14px;padding-left:5px">{{duedateformatted | date: "d MMMM y"}}</span>
+                  </div>
+                  
+                </div>
+                
+              </div>
+         
+              <div class="col-md-2 col-lg-2 col-2">
+                <!-- <div class="float-right" style="border-left: 1px solid grey;height: 60px;"> -->
+                <div
+                  style="padding-top: 6pt; float: right"
+                  *ngIf="!prop.assignedTo"
+                >
+                  <img 
+                    (click)="goToTaskAssignModal(i)"
+                    src="/assets/humansample/person.svg"
+                    style="border-radius: 2px;cursor: pointer;"
+                  />
+                </div>
+
+                <div
+                  style="padding-top: 6pt; float: right"
+                  *ngIf="prop.assignedTo"
+                >
+                  <div (click)="goToTaskAssignModal(i)">
+                    <div title="{{ prop.assigned_user.firstName }} {{
+                      prop.assigned_user.lastName
+                    }}">
+                    <ngx-avatar
+                      src="{{ prop.assigned_user.imageUrl }}"
+                      fgColor="black"
+                      name="{{ prop.assigned_user.firstName }} {{
+                        prop.assigned_user.lastName
+                      }}"
+                      bgColor="antiquewhite"
+                      [round]="true"
+                      alt="Winery Image"
+                      [size]="30"
+                      class="propic"
+                    ></ngx-avatar>
+                    </div>
+                  </div>
+                  <!-- <img
+                    (click)="goToTaskAssignModal(i)"
+                    title="{{ prop.assigned_user.firstName }} {{
+                      prop.assigned_user.lastName
+                    }}"
+                    src="assets/user-4.svg"
+                    style="border-radius: 2px"
+                    width="30px"
+                  /> -->
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </mat-card>
+
+          <div style="height: 1em"></div>
+          <!--</div>-->
+        </div>
+        
+      </div>
+      </div>
+      <div *ngIf="overdue.length == 0">
+        <div class="main_heading">No overdue Tasks</div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="accordion" id="accordionExample">
+    <span style="color: white; cursor: pointer;" data-toggle="collapse" data-target="#collapseOne"
+      *ngIf="CompletedTaskslength > 0">Completed</span>
+  </div> -->
+
+  <!-- /* Completed Tasks */ -->
+  <div class="main-content" style="margin-top: 5px;">
+    <div class="accordion" id="accordionExample">
+      <span
+        style="color: white; cursor: pointer"
+        data-toggle="collapse"
+        data-target="#collapseOne"
+        *ngIf="CompletedTaskslength > 0"
+         (click)="clickcomp=true"
+        >
+        Completed</span>
+   </div>
+<div style="height:1em"></div>
+    <div [ngClass]="">
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div *ngFor="let prop of completedTasks; let i = index">
+          <mat-card>
+            <div class="row">
+              <div class="col-md-10 col-10 col-lg-10">
+                <div class="radiobtn float-left mt-1"(click)="MarkAsIncomplete(i)" style="cursor:pointer" title="Mark as incomplete">
+                  <mat-icon
+                    title="Mark as not complete"
+                    style="float: left; color: #133e62"
+                    >check_circle</mat-icon>
+                </div>
+                 
+                <div style="margin-left: 2em">
+                  <span class="card_heading">
+                    <s>{{ prop.name }}</s></span
+                  >
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length > 1"
+                  >
+                    {{ prop.subTasks.length }} Subtasks
+                  </div>
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length == 1"
+                  >
+                    {{ prop.subTasks.length }} Subtask
+                  </div>
+                  <div
+                    class="card_sub_heading"
+                    *ngIf="prop.subTasks.length == 0"
+                  ></div>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-2 col-2">
+                <!-- <div class="float-right" style="border-left: 1px solid grey;height: 60px;"> -->
+                <div style="float: right; padding-top: 6pt">
+                  <!-- <img title="{{prop.assigned_user.firstName}} {{prop.assigned_user.lastName}}" src="/assets/user-4.svg" width="30px" /> -->
+                  <div title="{{ prop.assigned_user.firstName }} {{
+                    prop.assigned_user.lastName
+                  }}">
+                  <ngx-avatar
+                    src="{{  prop.assigned_user.imageUrl  }}"
+                    fgColor="black"
+                    name="{{ prop.assigned_user.firstName }} {{
+                      prop.assigned_user.lastName
+                    }}"
+                    
+                    bgColor="antiquewhite"
+                    [round]="true"
+                    alt="Winery Image"
+                    [size]="30"
+                    class="propic"
+                     
+                  >
+                </ngx-avatar>
+                </div>
+
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </mat-card>
+          <div style="height:1em"></div>
+        </div>
+      
+        <!-- <div *ngIf="CompletedTaskslength == 0">
+        <div align="center" class="main_heading">No Completed tasks</div>
+      </div> -->
+      </div>
+    </div>
+    <div style="height:4em"></div>
+    <!--- </div>-->
+  </div>
+</div>
+
+  <!-- Add Task button -->
+
+  <div class="main-content fixed-bottom"  >
+    <div id="footer">
+      <div *ngIf="errMsg">
+        <div class="main_heading" style="color: rgb(245, 1, 1)">
+          Please enter the task name
+        </div>
+      </div>
+      <div class="row" *ngIf="clicked"  >
+        <div class="col-md-12 col-lg-12 col-12">
+          <input 
+            #myinput
+            type="text"
+            class="text-height form-control"
+            placeholder="Enter the task name here... "
+            [(ngModel)]="taskName"
+            (keyup)="AddTask($event)"
+          />{{myinput.focus()}}
+        </div>
+      </div>
+
+      <button mat-button class="add_button" (click)="setclicked()" >
+        <mat-icon class="float-left mt-1">add</mat-icon>&nbsp;
+        <span style="float: left"> Add Task</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Assign task -->
+
+  <div
+    class="modal fade"
+    id="assignTask"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5 class="card_heading">Assign Task</h5>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              id="searchtext"
+              [(ngModel)]="searchValue"
+              (keyup)="searchfunction()"
+            />
+          </div>
+          <div [ngClass]="assignTaskUsers ? assignTaskUsers.length > 12 ? 'Scroll': '' : ''" style="cursor:pointer">
+            <div class="row" >
+              <div  align="center"
+                class="col-3"
+                *ngFor="let prop of assignTaskUsers; let i = index"
+                (click)="gotoAssignTask(i)"
+              >
+                <!-- <img
+                  (click)="gotoAssignTask(i)"
+                  src="{{
+                    !prop.imageUrl ? './assets/user-4.svg' : prop.imageUrl
+                  }}"
+                  style="width: 3em; border-radius: 4px"
+                /> -->
+                <div >
+                  <ngx-avatar
+                    src="{{ prop.imageUrl }}"
+                    fgColor="black"
+                    bgColor="antiquewhite"
+                    [round]="true"
+                    name="{{ prop.firstName }}"
+                    alt="Winery Image"
+                    [size]="40"
+                    class="propic"
+                  ></ngx-avatar>
+                
+                <div class="assign_task_names">{{ prop.firstName }}</div>
+                <div style="height:1em"></div>
+              </div>
+            </div>
+              
+              <div *ngIf="Userlength == 0">
+                <div
+                  class="main_heading"
+                  style="color: red; padding-left: 150px"
+                >
+                  No Search Result
+                </div>
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<nav class="navbar navbar-expand-md navbar-heading navbar-dark ">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="topheading" >{{metaData}}</div>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+
+    <ul class="navbar-primary-menu navbar-nav ml-auto flex-row vertical-nav">
+
+      <li id="desktop_profile" class="dp" style="padding-top:30px;padding-right:10px;padding-left:10px">
+        <img id="logo" src="assets/logo_white_bg/Orange_Flower__1_-removebg-preview-3.png" style="height: 60px;"
+          alt="Logo couldn't be found" /><span style="font-size: 25px;color: white;"> Kriya </span>
+      </li>
+      <li>
+       <!---- <button style="margin-top: 0.5em; margin-left: 0.5em;" class="navbar-toggler" type="button"
+          data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>-->
+
+        <a [routerLink]="'/profile'" id="mobile_profile">
+          <ngx-avatar
+            src="{{ ProfileImage }}"
+            fgColor="black"
+            name="{{ firstName }} {{ lastName }}"
+            bgColor="antiquewhite"
+            [round]="true"
+            alt="Winery Image"
+            [size]="30"
+            class="propic"
+          ></ngx-avatar>
+          <div style="height:1em"></div>
+          <!-- <img src="/assets/user-4.svg" width="30px" /> -->
+          <span style="padding-left: 0.5em;">{{ username }}</span>
+        </a>
+       <div id="desktop_profile mobile_profile" style="height:1em"></div>
+        <a
+        [routerLink]="'/project'"
+        [ngClass]="rla12.isActive ? 'bordered' : ''"
+        routerLinkActive="active"
+        #rla12="routerLinkActive"
+      >
+        <div *ngIf="rla12.isActive; else elseBlock9" class="active-nav">
+          <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\register.svg" />
+          
+           <span style="padding-left:5px">Projects</span></p></div>
+          
+        </div>
+        <ng-template #elseBlock9 class="inactive-nav">
+          <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\register.svg" />
+            <span style="padding-left:5px">Projects</span> Projects
+          </p></div>
+        </ng-template>
+      </a>
+       
+        <a
+          [routerLink]="'/tasks'"
+          [ngClass]="rla13.isActive ? 'bordered' : ''"
+          routerLinkActive="active"
+          #rla13="routerLinkActive"
+        >
+          <div *ngIf="rla13.isActive; else elseBlock10" class="active-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\Mask Group 7.svg" />
+            
+              <span style="padding-left:5px">Projects</span>  My Tasks</p></div>
+            
+          </div>
+          <ng-template #elseBlock10 class="inactive-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\Mask Group 7.svg" />
+              <span style="padding-left:5px">Projects</span>  My Tasks
+            </p></div>
+          </ng-template>
+        </a>
+       
+        <a
+          [routerLink]="'/calendar'"
+          [ngClass]="rla14.isActive ? 'bordered' : ''"
+          routerLinkActive="active"
+          #rla14="routerLinkActive"
+        >
+          <div *ngIf="rla14.isActive; else elseBlock11" class="active-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\Mask Group 9.svg" />
+              <span style="padding-left:5px">Projects</span> Calendar
+            </p></div>
+          </div>
+          <ng-template #elseBlock11 class="inactive-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"><img src="assets\sidenavicons\Mask Group 9.svg" />
+              <span style="padding-left:5px">Projects</span> Calendar
+            </p></div>
+          </ng-template>
+        </a>
+      
+        <a
+          [ngClass]="rla15.isActive ? 'bordered' : ''"
+          routerLinkActive="active"
+          #rla15="routerLinkActive"
+        >
+          <div *ngIf="rla15.isActive; else elseBlock12" class="active-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"> <img src="assets\sidenavicons\Mask Group 28.svg" />
+              <span style="padding-left:5px">Projects</span>  
+              Dashboard
+            </p></div>
+          </div>
+          <ng-template #elseBlock12 class="inactive-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"><img src="assets\sidenavicons\Mask Group 28.svg" />
+              <span style="padding-left:5px">Projects</span>  Dashboard
+            </p></div>
+          </ng-template>
+        </a>
+        
+        <a
+          [routerLink]="'/profile'"
+          [ngClass]="rla16.isActive ? 'bordered' : ''"
+          routerLinkActive="active"
+          #rla16="routerLinkActive"
+        >
+          <div *ngIf="rla16.isActive; else elseBlock14" class="active-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"><img src="assets\sidenavicons\user.svg" />
+              <span style="padding-left:5px">Projects</span>  Profile
+            </p></div>
+          </div>
+          <ng-template #elseBlock14 class="inactive-nav">
+            <div class="nav-text"><p style="padding-left: 10px;"><img src="assets\sidenavicons\user.svg" />
+              <span style="padding-left:5px">Projects</span>  Profile
+            </p></div>
+          </ng-template>
+        </a>
+      
+        <a
+         
+          (click)="gotologin()"
+          class="logout"
+          ><img src="assets\sidenavicons\Mask Group 21.svg" /><span
+            style="padding-left: 0.5em"
+            >Logout</span
+          ></a
+        >
+        
+      
+      </li>
+    </ul>
+  </div>
+
+  <ul class="navbar-nav ml-auto" id="desktop_profile">
+    <li class="nav-item" style="display: flex">
+      <h3
+        class="companyname"
+        style="
+          font-size: 16pt;
+          font-family: 'Roboto';
+          font-weight: 400;
+          color: white;
+          padding-right: 8px;
+          padding-top: 2.5px;
+        "
+      >
+        {{ companyname | titlecase }}
+      </h3>
+      <a class="profile_overlay" style=" padding-top: 2px;" [routerLink]="'/profile'">
+        <div title="{{username}}">
+        <ngx-avatar
+          src="{{ ProfileImage }}"
+          fgColor="black"
+          name="{{ firstName }} {{ lastName }}"
+          bgColor="antiquewhite"
+          [round]="true"
+          alt="Winery Image"
+          [size]="30"
+          class="propic"
+        ></ngx-avatar>
+      </div>      </a>
+      <!-- <img src="/assets/user-4.svg" title="{{username}}" width="30px" /> -->
+    </li>
+  </ul>
+</nav>

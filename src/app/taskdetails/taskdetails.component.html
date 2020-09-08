@@ -1,0 +1,588 @@
+<div>
+  <app-navbar [metaData]="metaData"></app-navbar>
+
+  <!-- TextArea for Task -->
+  <div class="main-content">
+    <!-- <div style="cursor: pointer;" class="row ml-auto mb-1" (click)="GoPreviousPage()">
+      <span class="main_heading" style="font-size: small;">&nbsp;Project </span>
+      <span class="material-icons" style="font-size: 20px;">keyboard_arrow_right</span>
+    </div> -->
+    <div style="height: 1em"></div>
+
+    <div class="row">
+      <div
+        class="col-md-6 col-lg-6 col-6"
+        style="display: inline-flex; align-items: center"
+      >
+        <span
+          class="material-icons"
+          style="color: white; font-size: 20px; float: left;padding-bottom:3px"
+          >panorama_fish_eye</span
+        >
+        &nbsp;<input
+         style="font-size:20px;padding-bottom:6px;"
+          class="edit_project"
+          type="text"
+          [(ngModel)]="taskName"
+          (keyup)="EditTaskName($event)"
+        />
+      </div>
+      <div class="col-md-6 col-lg-6 col-6" style="align-items: center">
+        <div class="float-right" *ngIf="t_assignedto">
+          <!-- <img src="/assets/user-4.svg" width="30px" /> -->
+          <div style="cursor:pointer" title="{{t_assigned_fullname}}">
+          <ngx-avatar
+            src="{{ t_assigned_url}}"
+            fgColor="black"
+            name="{{ t_assigned_fullname }}"
+            bgColor="antiquewhite"
+            [round]="true"
+            alt="Winery Image"
+            [size]="30"
+            class="propic"
+          ></ngx-avatar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-lg-10 col-10">
+        <textarea *ngIf="isEditDesc" class="notes_textarea" placeholder="Type here to add a description/notes" [(ngModel)]="taskDesc" (keyup)="addProjectTaskDesc($event)"></textarea>
+        <label *ngIf="!isEditDesc" class="notes_textarea" style="font-size:16px;color:#B8B8B8;font-family:Roboto" >{{taskDesc ? taskDesc : "Type here to add a description/notes"}}</label>
+      </div>
+      <div class="col-md-2 col-lg-2 col-2">
+        <span class="pointer" *ngIf="!isEditDesc" >
+          <mat-icon style="color: #ffffff !important;" (click)="isEditDesc = true">edit</mat-icon>
+        </span>
+        <span class="pointer" *ngIf="isEditDesc">
+          <mat-icon style="color: #ffffff !important;" (click)="cancelDesc()">cancel</mat-icon>
+        </span>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-2 col-lg-2 col-3" style="cursor: pointer;" >
+        <div class="card " (click)="mtassign()">
+          <div class="col desktop_options mobile_font" >
+            <div *ngIf="!t_assignedto">
+              <img class="imgicon" src="assets/humansample/person.svg">
+             <span class="desktop_options_font">Assign</span>
+            </div>
+           <!--- <div *ngIf="t_assigned_url">
+              <img class="imgicon" src="{{t_assigned_url}}" width="30pt" style="border-radius:100px;">
+             <span class="desktop_options_font">{{t_assigned_firstname}}</span>
+            </div>-->
+            <div *ngIf="t_assignedto">
+              
+             <span style="float:left"> <ngx-avatar
+              src="{{ t_assigned_url}}"
+              fgColor="black"
+              name="{{ t_assigned_fullname }}"
+              bgColor="antiquewhite"
+              [round]="true"
+              alt="Winery Image"
+              [size]="22"
+              class="propic"
+            ></ngx-avatar></span>
+             <span class="desktop_options_font" style="padding-left:5px">{{t_assigned_firstname}}</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-2 col-lg-2 col-3" style="cursor: pointer;" >
+        <div class="card ">
+          <div class="col" >
+            <div (click)="openCalendar($event)">
+              <p-calendar #calendar class="hide-calender-input" [showIcon]="true" [(ngModel)]="selectedDate" dismissable="false" style="color:black"
+              [minDate]="minimumDate" (onSelect)="OverDueSelectedDate($event)"></p-calendar>
+              <span *ngIf="dueDate" title="Due Date" style="color:#133E62; font-size: small;">{{dueDate |date:'d MMMM'}}</span>
+              <span *ngIf="!dueDate" style="color:#133E62; font-size: small;">Set Due Date</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-2 col-3" style="cursor: pointer;" >
+        <div class="card " (click)="gotoPriorityModal()">
+          <div class="col desktop_options mobile_font" >
+           
+           
+            <div *ngIf="!prior">
+              <img class="imgicon" src="assets/Mask Group 58.svg">
+             <span  class="desktop_options_font "  > Priority</span>
+            </div>
+            <div *ngIf="prior=='now'">
+              <img class="imgicon" src="assets/now.png">
+             <span  class="desktop_options_font "  > {{prior | titlecase}}</span>
+            </div>
+            <div *ngIf="prior=='later'">
+              <img class="imgicon" src="assets/later.png">
+             <span  class="desktop_options_font "  > {{prior | titlecase}}</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-2 col-3" style="cursor: pointer;" >
+        <div class="card" (click)="gotoImpModal()">
+          <div class="col desktop_options mobile_font" >
+           
+           
+            <div *ngIf="!imp">
+              <img class="imgicon" src="assets/Mask Group 59.svg">
+             <span class="desktop_options_font">Important</span>
+            </div>
+            <div *ngIf="imp=='low'">
+              <img class="imgicon" src="assets/low.png">
+             <span class="desktop_options_font">{{imp | titlecase}}</span>
+            </div>
+            <div *ngIf="imp=='normal'">
+              <img class="imgicon" src="assets/normal.png">
+             <span class="desktop_options_font">{{imp | titlecase}}</span>
+            </div>
+            <div *ngIf="imp=='high'">
+              <img class="imgicon" src="assets/high.png">
+             <span class="desktop_options_font">{{imp | titlecase}}</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!--- <div class="row">
+       <div class="col-md-1 col-lg-2 col-2" >
+         <div class="card">
+        <div> <img class="imgicon" src="assets/humansample/person.svg"><span style="padding-left:5px">Assign</span>
+        </div> </div>
+       </div>
+       <div class="col-md-2">
+         <div class="card">
+           <div>
+        <img class="imgicon" src="assets/humansample/person.svg"><span style="padding-left:5px">Assign</span>
+      </div>
+      </div>
+      </div>
+      <div class="col-md-2">
+        <div class="card">
+        <div> <img class="imgicon" src="assets/humansample/person.svg"><span style="padding-left:5px">Assign</span>
+     </div>
+     </div>
+     </div>
+     <div class="col-md-2">
+      <div class="card">
+        <div>
+     <img class="imgicon" src="assets/humansample/person.svg"><span style="padding-left:5px">Assign</span>
+   </div>
+   </div>
+   </div>
+       </div>-->
+      <div style="height:1em"></div> 
+     <div style="cursor: pointer;">
+       <img width="15pt" src="assets/Mask Group 61.svg"><span style="display:inline;padding-left:5px;color:#ffffff;padding-top:8px">History</span>
+       <div *ngIf="clickhistory" style="padding-left:7px;display:inline;" (click)="clickhistory=!clickhistory"><mat-icon style="color:white">keyboard_arrow_up</mat-icon></div>
+       <div *ngIf="!clickhistory" style="padding-left:7px;display:inline;color:white" (click)="clickhistory=!clickhistory"><mat-icon style="color:white">keyboard_arrow_down</mat-icon></div>
+     </div>
+    <div *ngIf="clickhistory" class="row">
+      <div class="col-md-12 col-lg-12  col-12" style="padding-left: 12px !important">
+        <div>
+          <!-- <ngx-avatar
+          name="{{ createdUserName }}"
+          [round]="true"
+          alt="Winery Image"
+          [size]="40"
+          class="propic"
+        ></ngx-avatar> &nbsp; -->
+        <span style="color: #ffffff;padding-left:6px; font-size: 1em;"><u>{{createdUserName}}</u> <span style="color: #cccccc;"> created this
+            task on </span>
+          <!--<b>22 May
+            2020</b>-->
+          {{createdon |date:'d MMMM y'}}
+          <!--- under
+          <u>Big Project</u>--></span>
+      </div>
+    </div>
+    </div>
+ <!---  <div class="row" >
+      <div class="col-md-12 col-12 col-lg-12 col-12" style="padding-left: 6px !important;">
+        <div>
+           <p-calendar class="hide-calender-input" [showIcon]="true" [(ngModel)]="selectedDate" dismissable="false"
+              [minDate]="minimumDate" (onSelect)="OverDueSelectedDate($event)"></p-calendar>
+            <span *ngIf="dueDate" title="Due Date" style="color: #FFFFFF; font-size: small;">{{dueDate |date:'d MMMM y'}}</span>
+            <span *ngIf="!dueDate" style="color: #FFFFFF; font-size: small;">Set Due Date</span>
+        </div>
+      </div>
+    </div>-->
+  </div>
+  
+  <div class="main-content">
+    <h5 class="main_heading">Sub Tasks</h5>
+    <div *ngIf="!isLoaded" style="text-align: center">
+      <div class="spinner-border text-white"></div>
+    </div>
+
+    <div *ngIf="isLoaded">
+      <div [ngClass]="">
+        <div *ngFor="let prop of incompletedTasks;let i=index">
+          <mat-card>
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-10">
+                <!--- <div class="radiobtn float-left" (click)="MarkAsComplete(i)" (mouseenter)="mouseEnter(i)"
+              (mouseleave)="mouseLeave(i)">-->
+                <div style="cursor: pointer;"
+                  class="radiobtn float-left mt-1"
+                  (click)="MarkAsComplete(i)"
+                  (mouseenter)="mouseEnter(i)"
+                  (mouseleave)="mouseLeave(i)"
+                >
+                  <mat-icon *ngIf="!iconvisiblearray[i]"
+                    >panorama_fish_eye</mat-icon
+                  >
+                  <mat-icon
+                    [hidden]="!iconvisiblearray[i]"
+                    title="Mark as complete"
+                    >check_circle_outline</mat-icon
+                  >
+                </div>
+                <div
+                  (click)="gotoTaskDetails(i)"
+                  style="margin-left: 2em; cursor: pointer"
+                >
+                  <span class="card_heading"> {{ prop.name }}
+                    <div *ngIf="prop.priority=='now'" style="display:inline">
+                        
+                      <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/now.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                    </div>
+                    
+                  <!---  <div *ngIf="prop.priority=='later'" style="display:inline">
+                      
+                      <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/later.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.priority | titlecase}}</span></span>
+                    </div>-->
+                    
+                    <div *ngIf="prop.importance=='high'" style="display:inline">
+                      
+                      <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/high.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                    </div>
+                  
+                  <!---  <div *ngIf="prop.importance=='low'" style="display:inline">
+                      
+                      <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/low.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                    </div>-->
+                    <div *ngIf="prop.importance=='normal'" style="display:inline">
+                      
+                      <span style="float:right;font-size:15px;padding-left:10px"><img src="assets/normal.png" width="16pt" style="padding-bottom:4px"><span style="padding-left:5px">{{prop.importance | titlecase}}</span></span>
+                    </div>
+
+
+
+                  </span>
+                  <div class="card_sub_heading" *ngIf="prop.subTasks">
+                    <span *ngIf="prop.subTasks.length > 0"
+                      >{{ prop.subTasks.length }} Subtasks</span
+                    >
+                    <span *ngIf="prop.subTasks.length === 0"></span>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="col-md-6 col-lg-6 col-6">
+                <div style="float: right;">
+                  <img (click)="gotoAssignTaskModal(i)" src="/assets/humansample/person.svg" width="20px">
+                </div>
+              </div>-->
+
+              <div class="col-md-2 col-lg-2 col-2">
+                <!-- <div class="float-right" style="border-left: 1px solid grey;height: 35px;"> -->
+                <div
+                  style="float: right; padding-top: 5pt"
+                  *ngIf="!prop.assignedTo"
+                >
+                  <!---  <img (click)="goToTaskAssignModal(i)" [src]="url" style=" border-radius: 2px;" width="20px" />-->
+                  <img 
+                    (click)="gotoAssignTaskModal(i)"
+                    src="assets/humansample/person.svg"
+                    style="border-radius: 2px;cursor: pointer;"
+                  />
+                </div>
+                <div
+                  style="float: right; padding-top: 5pt"
+                  *ngIf="prop.assignedTo"
+                >
+                  <!---  <img (click)="goToTaskAssignModal(i)" [src]="url" style=" border-radius: 2px;" width="20px" />-->
+                  <!-- <img
+                    (click)="gotoAssignTaskModal(i)"
+                    src="assets/user-4.svg"
+                    style="border-radius: 2px"
+                    width="30px"
+                  /> -->
+                  <div (click)="gotoAssignTaskModal(i)" style="cursor:pointer">
+                   <div title="{{ prop.assigned_user.firstName }} {{
+                    prop.assigned_user.lastName
+                  }}" >
+                    <ngx-avatar
+                     src="{{prop.assigned_user.imageUrl}}"
+                      fgColor="black"
+                      bgColor="antiquewhite"
+                      [round]="true"
+                      alt="Winery Image"
+                      name="{{ prop.assigned_user.firstName }} {{
+                        prop.assigned_user.lastName
+                      }}"
+                      [size]="30"
+                      class="propic"
+                    ></ngx-avatar>
+                  </div>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </mat-card>
+          <div style="height: 1em"></div>
+        </div>
+        <div *ngIf="length == 0">
+          <div class="main_heading">No Sub Tasks Available</div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 1em"></div>
+
+    <div class="accordion" id="accordionExample">
+      <span
+        style="color: white; cursor: pointer"
+        data-toggle="collapse"
+        data-target="#collapseOne"
+        *ngIf="lengthCompletedTasks > 0"
+        (click)="clickcomp=true"
+        >Completed</span
+      >
+      <div style="height: 1em"></div>
+    </div>
+    <div [ngClass]="">
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div *ngFor="let prop of completedTasks; let i = index">
+          <!--- <div *ngIf="samplecompletetest[i] == true">
+          {{ samplecompletetest[i] }}-->
+          <mat-card>
+            <div class="row">
+              <div class="col-md-10 col-10 col-lg-10">
+                <div class="radiobtn float-left mt-1" style="cursor: pointer;" (click)="MarkAsIncomplete(i)" title="Mark as incomplete">
+                  <mat-icon style="float: left"
+                    >check_circle</mat-icon
+                  >
+                </div>
+
+                <div style="margin-left: 2em">
+                  <mat-card-title class="card_heading"
+                    ><s>{{ prop.name }}</s></mat-card-title
+                  >
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-2 col-2">
+                <!-- <div class="float-right" style="border-left: 1px solid grey;height: 35px;"> -->
+                <div style="float: right; padding-top: 3pt">
+                  <div title="{{ prop.assigned_user.firstName }} {{
+                    prop.assigned_user.lastName
+                  }}" style="cursor:pointer">
+                  <ngx-avatar
+                  src="{{prop.assigned_user.imageUrl}}"
+                    fgColor="black"
+                    name="{{ prop.assigned_user.firstName }} {{
+                      prop.assigned_user.lastName
+                    }}"
+                    bgColor="antiquewhite"
+                    [round]="true"
+                    alt="Winery Image"
+                    [size]="30"
+                    class="propic"
+                  ></ngx-avatar>
+                  </div>
+                  <!-- <img src="/assets/user-4.svg" width="30px" /> -->
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </mat-card>
+          <div style="height:1em"></div>
+          <!--</div>
+        <div [hidden]="true">[samplecompletetest[i]] = false</div>-->
+        </div>
+      </div>
+    </div>
+    <div style="height:4em"></div>
+
+    <!--<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <mat-card>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-6">
+            <i class="icon svgIcon ms-Icon checkbox-20">
+              <svg focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                  d="M12 20c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8m0-17c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9">
+                </path>
+              </svg>
+            </i>
+            <span class="completed">Task 3</span>
+          </div>
+          <div class="col-md-6 col-lg-6 col-6">
+            <div style="float: right;">
+              <img src="/assets/user-4.svg" width="30px">
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>-->
+  </div>
+
+  <!-- Add Sub Task button -->
+
+  <div class="main-content fixed-bottom">
+    <div id="footer">
+      <div *ngIf="errorMsg">
+        <div class="main_heading" style="color: rgb(245, 1, 1)">
+          Please enter the Subtask name
+        </div>
+      </div>
+      <div class="row" *ngIf="clicked">
+        <div class="col-md-12">
+          <input #myinput
+            type="text"
+            class="text-height form-control"
+            placeholder="Enter the subtask name here... "
+            [(ngModel)]="subtaskName"
+            (keyup.enter)="AddSubTask($event)"
+          />{{myinput.focus()}}
+          <!-- <span class="text-danger">{{errormsg}}</span> -->
+        </div>
+      </div>
+      <button mat-button class="add_button" (click)="clicked = true">
+        <mat-icon class="float-left mt-1" style="color: white">add</mat-icon
+        >&nbsp;
+        <span style="float: left"> Add Sub Task</span>
+      </button>
+    </div>
+  </div>
+  
+  <!--Priority Modal-->
+  <div
+  class="modal fade"
+  id="priorityModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h5 class="card_heading" style="text-align:center">Priority</h5>
+        <hr>
+        <div style="cursor: pointer;" (click)="setPriority('now')">
+        <img src="assets/now.png" width="20pt"><span style="padding-left:10px">Now <img src="assets/right-arrow.png" width="8pt" style="float:right"></span>
+        </div>
+        <div style="height:1em"></div>
+        <div  style="cursor: pointer;" (click)="setPriority('later')">
+        <img src="assets/later.png" width="20pt"><span style="padding-left:10px">Later<img src="assets/right-arrow.png" width="8pt" style="float:right"></span>
+          </div>
+      </div>
+        </div>
+</div>
+  </div>
+ <!--Importance Modal-->
+ <div
+ class="modal fade"
+ id="impModal"
+ tabindex="-1"
+ role="dialog"
+ aria-labelledby="exampleModalCenterTitle"
+ aria-hidden="true"
+>
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-body">
+       <h5 class="card_heading" style="text-align:center">Important</h5>
+       <hr>
+       <div style="cursor: pointer;" (click)="setImp('high')">
+       <img src="assets/high.png" width="20pt"><span style="padding-left:10px">High <img src="assets/right-arrow.png" width="8pt" style="float:right;padding-top:3px;"></span>
+       </div>
+       <div style="height:1em"></div>
+       <div  style="cursor: pointer;" (click)="setImp('normal')">
+       <img src="assets/normal.png" width="20pt"><span style="padding-left:10px">Normal<img src="assets/right-arrow.png" width="8pt" style="float:right;;padding-top:3px;"></span>
+         </div>
+         <div style="height:1em"></div>
+       <div  style="cursor: pointer;" (click)="setImp('low')">
+       <img src="assets/low.png" width="20pt"><span style="padding-left:10px">Low<img src="assets/right-arrow.png" width="8pt" style="float:right;;padding-top:3px;"></span>
+         </div>
+     </div>
+       </div>
+</div>
+ </div>
+  <!--Assign Task Modal-->
+        <div
+    class="modal fade"
+    id="assignTask"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5 class="card_heading">Assign Task</h5>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              id="searchtext"
+              [(ngModel)]="searchValue"
+              (keyup)="searchfunction()"
+            />
+          </div>
+          <div [ngClass]="assignTaskUsers ? assignTaskUsers.length > 12 ? 'Scroll': '' : ''" style="cursor:pointer">
+            <div class="row">
+              <div align="center"
+                class="col-3"
+                *ngFor="let prop of assignTaskUsers; let i = index"
+              >
+                <!-- <img
+                  (click)="gotAssignedUser(i)"
+                  src="{{
+                    !prop.imageUrl ? './assets/user-4.svg' : prop.imageUrl
+                  }}"
+                  style="width: 3em; border-radius: 4px"
+                /> -->
+                <div (click)="maintaskassign?gotoAssignedUserMt(i):gotAssignedUser(i)">
+                  <ngx-avatar
+                    src="{{ prop.imageUrl }}"
+                    fgColor="black"
+                    bgColor="antiquewhite"
+                    name="{{ prop.firstName }}"
+                    [round]="true"
+                    alt="Winery Image"
+                    [size]="40"
+                    class="propic"
+                  ></ngx-avatar>
+                </div>
+                <div class="assign_task_names ">
+                 {{ prop.firstName }}
+                </div>
+                <div style="height:1em"></div>
+              </div>
+              <div *ngIf="Userlength == 0">
+                <div
+                  class="main_heading"
+                  style="color: red; padding-left: 150px"
+                >
+                  No Search Result
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

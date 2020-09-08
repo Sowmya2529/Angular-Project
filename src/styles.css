@@ -1,0 +1,286 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~primeng/resources/themes/nova-light/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeicons/primeicons.css";
+@media (min-width: 900px) {
+ 
+    body {
+      background-color: transparent;
+    }
+    .selector {
+      min-height: 100%;
+      min-width: 100%;
+      margin: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-image: url(/assets/bgimg_desktop/DSC00570.png);
+      background-attachment: fixed;
+  }
+
+  /* Card headings for projects,project details and task details page*/
+  .card_heading{
+    color: #133e62;
+    font-size: 20px;
+    font-weight:medium;
+  }
+  /* Add Buttons */
+  .add_button {
+    color: #ffffff;
+    background: linear-gradient(to right top, #3c6a93, #356490, #2d5e8d, #255989, #1d5386, #195082, #154c7e, #10497a, #104674, #11446e, #124168, #133e62);
+    width: 100%;
+    height:52px;
+    font-family: 'Montserrat';
+    font-weight: 900;
+  }
+  .topheading{
+    color:#FFFFFF;
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 255px;
+    padding-top:10px;
+    z-index:1;
+  }
+
+    /* Main headings for projects,project details and task details  page*/
+  .main_heading{
+    color: #ffffff;
+    font-size: 18px;
+  }
+
+  .edit_project{
+    height: 5vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    color: white;
+    font-size: 19px; 
+    font-weight: 300;
+   
+  }
+  #footer{
+    bottom:0;
+    display: contents;
+    position: fixed;
+  }
+
+}
+
+@media (max-width: 500px) {
+  body {
+    background-color: transparent;
+  }
+  .selector {
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(/assets/backgroundimg/bgimg.png);
+  }
+
+    /* Card headings for projects,project details and task details page*/
+    .card_heading{
+      color: #133e62;
+      font-size: 16px;
+      font-weight:medium;
+    }
+
+    /* Add Buttons */
+    .add_button {
+      color: #ffffff;
+      background: linear-gradient(to right top, #3c6a93, #356490, #2d5e8d, #255989, #1d5386, #195082, #154c7e, #10497a, #104674, #11446e, #124168, #133e62);
+      width: 100%;
+      font-family: 'Montserrat';
+      font-weight: 900;
+      display: contents;
+    }
+    .topheading{
+      color:#FFFFFF;
+      font-family: 'Montserrat';
+      font-weight: bold;
+      font-size:16px;
+    
+    }
+    .main_heading{
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    .edit_project{
+      height: 3vh;
+      background-color:transparent;
+      border: transparent;
+      outline: none;
+      color: white;
+      font-size: 16px; 
+    }
+    #footer{
+      position: fixed;
+      bottom: 0;
+      display: contents;
+    }
+
+
+}
+@media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
+  html,
+  body {
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(/assets/bgimg_desktop/DSC00570.png);
+  }
+
+
+
+
+  /* Card headings for projects,project details and task details page*/
+  .card_heading{
+    color: #133e62;
+    font-size: 20px;
+    font-weight:medium;
+  }
+  /* Add Buttons */
+  .add_button {
+    color: #ffffff;
+    background: linear-gradient(to right top, #3c6a93, #356490, #2d5e8d, #255989, #1d5386, #195082, #154c7e, #10497a, #104674, #11446e, #124168, #133e62);
+    width: 100%;
+    height:52px;
+    font-family: 'Montserrat';
+    font-weight: 900;
+  }
+  .topheading{
+    color:#FFFFFF;
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 258px;
+   
+    z-index:1;
+  }
+
+    /* Main headings for projects,project details and task details  page*/
+  .main_heading{
+    color: #ffffff;
+    font-size: 18px;
+  }
+
+  .edit_project{
+    height: 3vh;
+    background-color:transparent;
+    border: transparent;
+    outline: none;
+    color: white;
+    font-size: 16px; 
+   
+  }
+
+  #footer{
+    bottom:0;
+    display: contents;
+    position: fixed;
+    
+  }
+
+
+
+}
+
+/* Common Styles */
+
+.card_sub_heading{
+  color: #3B3B3B;
+  font-size: 14px;
+}
+
+.mat-card {
+  border-radius: 5px !important;
+}
+
+
+
+
+/* Heading status (Inprogress,overdue,completed) in top right in project details */
+.heading_status {
+  background-color: #fcb942 !important;
+  color: #ffffff;
+  font-size: 0.8em;
+  border-radius: 0.2em;
+  padding: 0 8px 2px 8px;
+  line-height: 16px;
+  float: right;
+  font-weight: bold;
+}
+
+
+/*card status color position */
+.card_status_color {
+  width: 1em;
+  height: 0.5em;
+  float: right;
+  border-radius: 3px;
+}
+
+/*card status number for project details page*/
+.card_status_number {
+  font-size: 1.8em;
+  color: #133e62;
+  font-weight: bold;
+}
+
+/* Assign Task  for person names*/
+.assign_task_names{
+  color: #727272;
+  font-size:smaller;
+  font-weight: bold;
+}
+
+.Scroll{
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+
+/* text field when add buttons presses*/
+.text-height{
+  width: 100%;
+  height: 8vh;
+  margin-bottom: 10px;    
+}
+
+input:focus
+{
+outline-color: #1F6695;
+}
+
+button:active
+{
+  outline: 2px solid #298ED2;
+  outline-offset: 1px;
+}
+
+
+button:disabled
+{
+opacity:0.6;
+background-color: #376891;
+}
+
+/* input box padding changes */
+.inputTextBox{
+  height: 40px;
+  padding-left: 0.5em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ui-datepicker {
+  z-index: 1031 !important;
+}
+

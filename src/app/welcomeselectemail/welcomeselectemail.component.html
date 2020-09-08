@@ -1,0 +1,67 @@
+<div class="createpass">
+  <div
+    class="topnav"
+    style="background-color: #4f5e76; height: 60px; width: 100%;"
+  ></div>
+  <br />
+  <div
+    class="logocontainer"
+    style="align-items: center; justify-content: center; text-align: center;"
+  >
+    <div class="logo" style="align-items: center; justify-content: center;">
+      <img
+        src="assets/logo_white_bg/Orange_Flower__1_-removebg-preview-3.png"
+      />
+      <!--style="padding-top: 170px; padding-left: 100px;"-->
+      <br />
+      <h1
+        class="title"
+        style="color: #133e62; text-align: center; font-size: 20px;"
+      >
+        Welcome to Kriya
+      </h1>
+    </div>
+  </div>
+  <br />
+
+  <div class="formscenter" style="align-items: center;">
+    <div class="forms">
+      <p>Choose an account</p>
+
+      <a
+        style="text-decoration: none;"
+        [routerLink]="'/createpassword'"
+        routerLinkActive="active"
+        ><mat-card class="example-card">
+          <div class="imagehuman" style="float: left; padding: 5px;">
+            <img
+              src="assets/sidenavicons/ac80e0bb4b9a6c0726e1f00dea59ab26@2x.png"
+            />
+          </div>
+          <div class="icon" style="float: right;">
+            <mat-icon [inline]="true">keyboard_arrow_right</mat-icon>
+          </div>
+          <div class="info">
+            <h5 style="color: #2b2b2b;">Steve Jobs</h5>
+            <mat-card-subtitle style="color: #2b2b2b; padding-left: 39px;"
+              >Stevejobs@todo.com</mat-card-subtitle
+            >
+            <!--  <h1>Steve Jobs</h1>
+            <p>Stevejobs@todo.com</p>-->
+          </div>
+        </mat-card>
+      </a>
+    </div>
+  </div>
+  <br />
+  <button class="differentemail" mat-button (click)="gotodiffemaipage()">
+    Use a different Email
+  </button>
+
+  <p
+    class="startedbtn"
+    style="color: #133e62; font: Medium 18px/21px Roboto; text-align: center;"
+  >
+    Don’t have an account?
+  </p>
+</div>

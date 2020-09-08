@@ -1,0 +1,77 @@
+@media (min-width: 1000px) {
+  .main-content {
+    margin-top: 2em;
+    margin-left: 250px;
+    padding: 20px;
+    font-family:'Roboto';
+  } 
+  .mat-card {
+    padding:  5px 15px 5px 15px;
+  }
+
+  /* #ProjectsScroll{
+    width: 100%;
+    height: 450px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  } */
+  /* #footer{
+   bottom:6px;
+   display: block;
+   width: 78%;
+ 
+    position: fixed; */
+    /*bottom:5px;
+     width:78%;
+     position: fixed;*/
+     /* position: fixed;
+    bottom: 5px;
+    display: block;
+    width: 100%; */
+  
+  /* } */
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .main-content {
+    margin-top: 10px;
+    padding: 10px;
+    font-family: 'Roboto';
+  }
+  
+  .mat-card {
+    padding:  5px 15px 5px 15px;
+  }
+  #ProjectsScroll{
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  
+  
+
+}
+
+@media only screen and (min-width : 494px) and (max-width : 890px) {
+
+  .main-content {
+    margin-top: 2em;
+    padding: 20px;
+  }
+  .mat-card {
+    padding: 5px 15px 5px 15px;
+  }
+}
+
+.m-t-5 {
+  margin-top: 5px !important;
+}
+
+.m-b-4 {
+  margin-bottom: 4px !important;
+}
+
+.pt-15 {
+  padding-top: 15px !important;
+}

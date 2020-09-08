@@ -1,0 +1,72 @@
+<div>
+  <app-navbar [metaData]="metaData"></app-navbar>
+  <div class="main-content">
+    <div class="row" *ngIf="tasklist.length !== 0">
+      <div class="col-md-12 col-lg-12 col-12" *ngFor="let task of tasklist | keyvalue" >
+        <mat-card class="mat_card_section">
+          <mat-card-title class="mat_card_title">{{task.key}}</mat-card-title>
+          <mat-card *ngFor="let t of task.value;let i=index" style="background-color: {{task.value[0].duecolor}}; margin: 5px 0;">
+            <div>
+              <div style="cursor: pointer;"
+                  class="radiobtn float-left mt-1"
+                  (mouseenter)="mouseEnter(i)"
+                  (click)="MarkAsComplete(t.task)"
+                  (mouseleave)="mouseLeave(i)"
+                >
+                  <mat-icon *ngIf="!iconvisiblearray[i]"
+                    >panorama_fish_eye</mat-icon
+                  >
+                  <mat-icon
+                    [hidden]="!iconvisiblearray[i]"
+                    title="Mark as complete"
+                    >check_circle_outline</mat-icon
+                  >
+              </div>
+              <div (click) = "gotoTaskDetails(t.task)" style="margin-left: 2em;">
+                <span class="fs-20">{{t.task.name}}</span>
+                <p class="card_sub_heading mb-0">
+                  {{t.task.project.name}}
+                </p>
+              </div>
+            </div>
+          </mat-card>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row" *ngIf="listofTasks.length !== 0">
+      <div class="col-md-12 col-lg-12 col-12" *ngFor="let fTask of listofTasks | keyvalue">
+        <mat-card class="mat_card_section">
+          <mat-card-title class="mat_card_title">{{fTask.key | date: "d MMM y"}}</mat-card-title>
+          <mat-card *ngFor="let t of fTask.value;let i =index" style="margin: 5px 0;">
+            <div>
+              <div style="cursor: pointer;"
+                  class="radiobtn float-left mt-1"
+                  (mouseenter)="mouseEnter(i)"
+                  (click)="MarkAsComplete(t.task)"
+                  (mouseleave)="mouseLeave(i)"
+                >
+                  <mat-icon *ngIf="!iconvisiblearray[i]"
+                    >panorama_fish_eye</mat-icon
+                  >
+                  <mat-icon
+                    [hidden]="!iconvisiblearray[i]"
+                    title="Mark as complete"
+                    >check_circle_outline</mat-icon
+                  >
+              </div>
+              <div (click)= "gotoTaskDetails(t.task)" style="margin-left: 2em;">
+                <span class="fs-20" style="cursor: pointer;">{{t.task.name}}</span>
+                <p class="card_sub_heading mb-0">
+                  {{t.task.project.name}}
+                </p>
+              </div>
+            </div>
+          </mat-card>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row" *ngIf="tasklist.length === 0 && listofTasks.length === 0" style="margin-left: 0px">
+      <span style="color: #FFFFFF;">No Tasks Available</span>
+    </div>
+  </div>
+</div>

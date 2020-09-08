@@ -1,0 +1,38 @@
+<div
+  class="projects"
+  style="background-size: 100%; background-repeat: no-repeat; height: 100%;"
+>
+  <div class="outer">
+    <span *ngIf="desktop">
+      <app-navbardesktop [metaData]="metaData"> </app-navbardesktop>
+    </span>
+    <span *ngIf="mobile">
+      <app-navbar [metaData]="metaData"></app-navbar>
+    </span>
+  </div>
+  <span *ngIf="desktop">
+    <div
+      class="topnav"
+      style="background-color: #4f5e76; height: 60px; width: 100%;"
+    >
+      <div class="img" style="float: right;">
+        <img
+          src="assets/sidenavicons/ac80e0bb4b9a6c0726e1f00dea59ab26@2x.png"
+          style="padding-top: 9px;"
+        />
+      </div>
+      <h1
+        style="
+          color: white;
+          text-align: left;
+          padding-top: 10px;
+          padding-left: 10px;
+        "
+      >
+        Dashboard
+      </h1>
+    </div>
+  </span>
+
+  <div class="inner"></div>
+</div>

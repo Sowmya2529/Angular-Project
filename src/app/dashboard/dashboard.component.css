@@ -1,0 +1,24 @@
+@media (min-width: 1000px) {
+  .projects {
+    height: 100%;
+    margin-left: 15%;
+  }
+  .inner {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url(/assets/bgimg_desktop/DSC00570.png);
+    height: 98%;
+  }
+}
+
+@media (max-width: 500px) {
+  .create button {
+    width: 385px;
+  }
+  .projects {
+    background-image: url(/assets/backgroundimg/bgimg.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 100%;
+  }
+}

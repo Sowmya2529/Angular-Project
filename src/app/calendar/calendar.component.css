@@ -1,0 +1,53 @@
+@media (min-width: 1000px) {
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+  } 
+  
+  .mat-card {
+    padding:  5px 15px 5px 15px;
+  }
+
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  
+  .main-content {
+    padding: 10px;
+  }
+  
+  .mat-card {
+    padding:  5px 15px 5px 15px;
+  } 
+  
+}
+
+@media only screen and (min-width : 494px) and (max-width : 890px) {
+
+  .main-content {
+    padding: 20px;
+  }
+  .mat-card {
+    padding: 5px 15px 5px 15px;
+  }
+
+}
+
+.mat_card_section {
+  margin-bottom: 25px;
+  box-shadow: none;
+  background: transparent;
+}
+
+.mat_card_title {
+  color: #FFFFFF !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}

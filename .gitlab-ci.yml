@@ -1,0 +1,39 @@
+stages:
+  - build
+  - deploy
+build-dev:
+  stage: build
+  only:
+    - dev
+  tags:
+    - dev
+  script:
+    - npm install
+    #- npm run build
+deploy-dev:
+  stage: deploy
+  only:
+    - dev
+  tags:
+    - dev
+  script:
+    - cd /home/todo/dev/kriyapwa && git pull && docker rm -f dev_app && cd /home/todo/compose && docker-compose up -d
+
+#test deployment script
+build-test:
+  stage: build
+  only:
+    - test
+  tags:
+    - test
+  script:
+    - npm install
+    #- npm run build
+deploy-test:
+  stage: deploy
+  only:
+    - test
+  tags:
+    - test
+  script:
+    - cd /home/todo/test/kriyapwa && git pull && docker rm -f test_app && cd /home/todo/compose && docker-compose up -d
